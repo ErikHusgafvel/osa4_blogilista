@@ -1,4 +1,3 @@
-//const http = require('http')
 const config = require('./utils/config')
 const express = require('express')
 const app = express()
@@ -13,4 +12,4 @@ app.use(express.json())
 
 app.use('/api/blogs', notesRouter)
 
-module.exports= app
+module.exports = app
