@@ -87,7 +87,7 @@ describe('total likes', () => {
   })
 })
 
-describe('most likes', () => {
+describe('favorite blog', () => {
 
   test('of empty list is {}', () => {
     const result = listHelper.favoriteBlog([])
@@ -117,14 +117,14 @@ describe('most likes', () => {
   })
 })
 
-describe.only('most blogs', () => {
+describe('most blogs', () => {
 
   test('of empty list is {}', () => {
     const result = listHelper.mostBlogs([])
     expect(result).toEqual({})
   })
 
-  test('when list has only one blog equals the information that author', () => {
+  test('when list has only one blog equals the information of that author', () => {
     const result = listHelper.mostBlogs(listWithOneBlog)
     expect(result).toEqual(
       {
@@ -140,6 +140,34 @@ describe.only('most blogs', () => {
       {
         author: 'Robert C. Martin',
         blogs: 3
+      }
+    )
+  })
+})
+
+describe.only('most likes', () => {
+
+  test('of empty list is {}', () => {
+    const result = listHelper.mostLikes([])
+    expect(result).toEqual({})
+  })
+
+  test('when list has only one blog equals the information of that author', () => {
+    const result = listHelper.mostLikes(listWithOneBlog)
+    expect(result).toEqual(
+      {
+        author: 'Edsger W. Dijkstra',
+        likes: 5
+      }
+    )
+  })
+
+  test('of a bigger list is calculated right', () => {
+    const result = listHelper.mostLikes(blogs)
+    expect(result).toEqual(
+      {
+        author: 'Edsger W. Dijkstra',
+        likes: 17
       }
     )
   })
