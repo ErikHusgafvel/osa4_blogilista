@@ -4,7 +4,7 @@
   "description": "HY Full Stack Development -kurssin 4. osa",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "dev": "nodemon index.js"
   },
   "repository": {
@@ -15,6 +15,7 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.8.0",
+    "jest": "^27.4.7",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
@@ -22,5 +23,8 @@
     "dotenv": "^15.0.0",
     "express": "^4.17.2",
     "mongoose": "^6.1.8"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
