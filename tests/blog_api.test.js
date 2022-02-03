@@ -99,6 +99,26 @@ describe('testing adding', () => {
 
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
   })
+
+  test('a blog without likes is accepted', async () => {
+    const newBlog = {
+      title: '9 things most get wrong about usability testing – and how to fix them',
+      author: 'Karri-Pekka Laakso',
+      url: 'https://www.reaktor.com/blog/9-things-most-get-wrong-about-usability-testing-and-how-to-fix-them/'
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    const titles = blogsAtEnd.map(blog => blog.title)
+    expect(titles).toContain(
+      '9 things most get wrong about usability testing – and how to fix them'
+    )
+    expect(blogsAtEnd[blogsAtEnd.length - 1].likes).toBe(0)
+  })
 })
 
 afterAll(() => {
