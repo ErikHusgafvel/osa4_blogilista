@@ -10,7 +10,14 @@ test('blogs are returned as json', async () => {
     .expect(200)
     .expect('Content-Type', /application\/json/)
 
-  expect(response.body).toHaveLength(0)
+  expect(response.body).toHaveLength(1)
+})
+
+test('blog has id field', async () => {
+  const response = await api
+    .get('/api/blogs')
+
+  expect(response.body[0].id).toBeDefined()
 })
 
 afterAll(() => {
