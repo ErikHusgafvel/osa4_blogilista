@@ -1,4 +1,4 @@
-const notesRouter = require('express').Router()
+const blogsRouter = require('express').Router()
 const Blog = require('../models/blog.js')
 
 /** Please, notice that the app is using export-async-errors library!
@@ -9,16 +9,21 @@ const Blog = require('../models/blog.js')
  * Thus, no async/await try-catch or Promise.then(...).catch(...) structures are needed!
  */
 
-notesRouter.get('/', async (request, response) => {
+blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({})
   response.json(blogs)
 })
 
-notesRouter.post('/', async (request, response) => {
+blogsRouter.post('/', async (request, response) => {
   const blog = new Blog(request.body)
 
   const savedBlog = await blog.save()
   response.status(201).json(savedBlog)
 })
 
-module.exports = notesRouter
+blogsRouter.delete('/:id', async (request, response) => {
+  await Blog.findByIdAndRemove(request.params.id)
+  response.status(204).end()
+})
+
+module.exports = blogsRouter
