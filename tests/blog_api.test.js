@@ -83,23 +83,6 @@ describe('testing adding', () => {
     */
   })
 
-  test('a blog without title cannot be added', async () => {
-    const newBlog = {
-      author: 'Karri-Pekka Laakso',
-      url: 'https://www.reaktor.com/blog/invalid-title/',
-      likes: 2
-    }
-
-    await api
-      .post('/api/blogs')
-      .send(newBlog)
-      .expect(400)
-
-    const blogsAtEnd = await helper.blogsInDb()
-
-    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
-  })
-
   test('a blog without likes is accepted', async () => {
     const newBlog = {
       title: '9 things most get wrong about usability testing – and how to fix them',
@@ -118,6 +101,42 @@ describe('testing adding', () => {
       '9 things most get wrong about usability testing – and how to fix them'
     )
     expect(blogsAtEnd[blogsAtEnd.length - 1].likes).toBe(0)
+  })
+
+  test('a blog without title is rejected', async () => {
+    const blogsAtBeginning = await helper.blogsInDb()
+
+    const newBlog = {
+      author: 'Karri-Pekka Laakso',
+      url: 'https://www.reaktor.com/blog/9-things-most-get-wrong-about-usability-testing-and-how-to-fix-them/',
+      likes: 4
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(blogsAtBeginning.length)
+  })
+
+  test('a blog without url is rejected', async () => {
+    const blogsAtBeginning = await helper.blogsInDb()
+
+    const newBlog = {
+      title: '9 things most get wrong about usability testing – and how to fix them',
+      author: 'Karri-Pekka Laakso',
+      likes: 4
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(blogsAtBeginning.length)
   })
 })
 
