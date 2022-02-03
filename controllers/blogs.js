@@ -1,21 +1,24 @@
 const notesRouter = require('express').Router()
 const Blog = require('../models/blog.js')
 
+/** Please, notice that the app is using export-async-errors library!
+ * Thus, errors are handled "under the hood".
+ * Library passes the error automatically to the errorHandling-middleware
+ * defined in '../utils/middleware.js' taken to use in '../app.js'
+ *
+ * Thus, no async/await try-catch or Promise.then(...).catch(...) structures are needed!
+ */
+
 notesRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({})
   response.json(blogs)
 })
 
-notesRouter.post('/', async (request, response, next) => {
+notesRouter.post('/', async (request, response) => {
   const blog = new Blog(request.body)
 
-  try {
-    const savedBlog = await blog.save()
-    response.status(201).json(savedBlog)
-  } catch(exception) {
-    next(exception)
-  }
-
+  const savedBlog = await blog.save()
+  response.status(201).json(savedBlog)
 })
 
 module.exports = notesRouter

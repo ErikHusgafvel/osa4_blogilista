@@ -145,7 +145,7 @@ describe('most blogs', () => {
   })
 })
 
-describe.only('most likes', () => {
+describe('most likes', () => {
 
   test('of empty list is {}', () => {
     const result = listHelper.mostLikes([])
