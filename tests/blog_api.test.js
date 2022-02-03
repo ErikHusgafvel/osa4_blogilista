@@ -183,6 +183,25 @@ describe('when there is initally some blogs saved', () => {
       expect(blogsAtEnd).toHaveLength(blogsAtStart.length)
     })
   })
+
+  describe('updating likes for a blog', () => {
+    test.only('adding one like to existing blog', async () => {
+      const blogs = await helper.blogsInDb()
+      const blog = blogs[0]
+      const likesAtStart = blog.likes
+      const likesIncrement = likesAtStart + 1
+
+      await api
+        .put(`/api/blogs/${blog.id}`)
+        .send( { likes: likesIncrement } )
+        .expect(200)
+
+      const response = await api
+        .get(`/api/blogs/${blog.id}`)
+
+      expect(response.body.likes).toBe(likesAtStart + 1)
+    })
+  })
 })
 
 
