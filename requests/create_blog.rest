@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyaWtrIiwiaWQiOiI2MjA0MDg2MTYyNTRhMzc1MjU4MWQ2MWMiLCJpYXQiOjE2NDQ0ODc1Njl9.ySBe5dXfw3Jr2DRRSY3dGJyV1IE7HHerPIxqLDKj0zg
 
 {
   "title": "Blog-title",
   "author": "Mongoose",
   "url": "undefined",
-  "userId": "6203807c6aa338328772bdb3",
   "likes": 0
 }
