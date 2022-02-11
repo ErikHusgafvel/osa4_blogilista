@@ -41,7 +41,14 @@ blogsRouter.post('/', async (request, response) => {
 
 blogsRouter.delete('/:id', async (request, response) => {
   const blog = await Blog.findById(request.params.id)
-  if( request.user.id && blog.user && blog.user.toString() === request.user.id.toString() ) {
+  if( !blog ) { return response.status(204).end() }
+
+  /** If request.user is undefined, request.user.id gives 500 Internal server error.
+   * Thus, first request.user must be tested. If that is undefined, no need to continue further.
+   * Same applies for blog.user, but the existence of blog is already tested above.
+   */
+
+  if( request.user && request.user.id && blog.user && blog.user.toString() === request.user.id.toString() ) {
     await Blog.findByIdAndRemove(request.params.id)
     return response.status(204).end()
   }
